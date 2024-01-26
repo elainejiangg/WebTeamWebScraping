@@ -14,38 +14,47 @@ driver.get("https://careers.peopleclick.com/careerscp/client_mit/external/result
 
 driver.implicitly_wait(10)
 
+drop_down_Xpath ="/html/body/div/div/div/div[1]/div/div[2]/form/div[2]/div[6]/div/div/div/button"
+drop_down_button = driver.find_element(By.XPATH, drop_down_Xpath)
+drop_down_button.click()
+fifty_Xpath = "/html/body/div/div/div/div[1]/div/div[2]/form/div[2]/div[6]/div/div/div/ul/li[4]/a"
+fifty_button = driver.find_element(By.XPATH, fifty_Xpath)
+fifty_button.click()
+print('slay')
+
+
 button = driver.find_element(By.XPATH, "/html/body/div/div/div/div[1]/div/div[2]/form/div[2]/div[6]/div/button[2]")
 button.click()
 driver.implicitly_wait(10)
 
+# # for listing in range(1, num_jobs_on_pg+1):
+#     # /html/body/div/div/div/div[1]/div/div/div[4]/form[2]/div/div[1]/ul/li[1]
+#     # /html/body/div/div/div/div[1]/div/div/div[4]/form[2]/div/div[1]/ul/li[{listing}]
+# driver.implicitly_wait(10)
 
 
 
-# for listing in range(1, num_jobs_on_pg+1):
-    # /html/body/div/div/div/div[1]/div/div/div[4]/form[2]/div/div[1]/ul/li[1]
-    # /html/body/div/div/div/div[1]/div/div/div[4]/form[2]/div/div[1]/ul/li[{listing}]
-driver.implicitly_wait(10)
-
-
-
-# # print(jobXpath)
-# job_element = driver.find_element(By.XPATH, jobXpath)
-# jobs_on_page.append(job_element)
+# # # print(jobXpath)
+# # job_element = driver.find_element(By.XPATH, jobXpath)
+# # jobs_on_page.append(job_element)
 job_dic = {}
 
 job_idx = 0
-num_jobs_on_pg = 10
+num_jobs_on_pg = 50
 num_total_jobs_Xpath = "/html/body/div/div/div/div[1]/div/div/div[4]/form[1]/div/div[1]/span[1]"
 num_total_jobs =  int(driver.find_element(By.XPATH, num_total_jobs_Xpath).text)
 pg_clicks = int(num_total_jobs/num_jobs_on_pg)
-# /html/body/div/div/div/div[1]/div/div/div[4]/form[1]/div/div[3]/ul/li[10]/a
-# /html/body/div/div/div/div[1]/div/div/div[4]/form[1]/div/div[3]/ul/li[9]/a
+# # /html/body/div/div/div/div[1]/div/div/div[4]/form[1]/div/div[3]/ul/li[10]/a
+# # /html/body/div/div/div/div[1]/div/div/div[4]/form[1]/div/div[3]/ul/li[9]/a
 
-# /html/body/div/div/div/div[1]/div/div/div[4]/form[1]/div/div[3]/ul/li[9]/a
+# # /html/body/div/div/div/div[1]/div/div/div[4]/form[1]/div/div[3]/ul/li[9]/a
 
 next_pg_Xpath = "/html/body/div/div/div/div[1]/div/div/div[4]/form[1]/div/div[3]/ul/li[9]/a"
 next_pg_button = driver.find_element(By.XPATH, next_pg_Xpath)
 driver.implicitly_wait(10)
+
+
+
 
 pg_num = 1
 for pg in range(0, pg_clicks):
