@@ -44,24 +44,54 @@ num_jobs_on_pg = 50
 num_total_jobs_Xpath = "/html/body/div/div/div/div[1]/div/div/div[4]/form[1]/div/div[1]/span[1]"
 num_total_jobs =  int(driver.find_element(By.XPATH, num_total_jobs_Xpath).text)
 pg_clicks = int(num_total_jobs/num_jobs_on_pg)
+print(pg_clicks)
 # # /html/body/div/div/div/div[1]/div/div/div[4]/form[1]/div/div[3]/ul/li[10]/a
 # # /html/body/div/div/div/div[1]/div/div/div[4]/form[1]/div/div[3]/ul/li[9]/a
 
 # # /html/body/div/div/div/div[1]/div/div/div[4]/form[1]/div/div[3]/ul/li[9]/a
 
-next_pg_Xpath = "/html/body/div/div/div/div[1]/div/div/div[4]/form[1]/div/div[3]/ul/li[9]/a"
-next_pg_button = driver.find_element(By.XPATH, next_pg_Xpath)
-driver.implicitly_wait(10)
+# /html/body/div/div/div/div[1]/div/div/div[4]/form[1]/div/div[3]/ul/li[9]/a
+
+
 
 
 
 
 pg_num = 1
-for pg in range(0, pg_clicks):
+for pg in range(0, pg_clicks+1):
     print("________________")
     print("pg#:", pg_num)
+    time.sleep(1)
+    # wait = WebDriverWait(driver, 10)
+    # jobs_on_page = []
+    jobs_on_page = driver.find_elements(By.CLASS_NAME, "pf-srp-singlehit")
+    actual_num_jobs_on_page = len(jobs_on_page)
+    print("# JOBS ON PG:", actual_num_jobs_on_page)
 
-    for job in range(1, num_jobs_on_pg+1):
+    # test_Xpath= "/html/body/div/div/div/div[1]/div/div/div[4]/form[2]/div/div[1]/ul/li[1]/div[1]/div[1]/div/label/a"
+    # test =  WebDriverWait(driver, 10).until(EC.presence_of_element_located((By.XPATH, test_Xpath))).text
+    # print(test)
+    # jobXpath = f"/html/body/div/div/div/div[1]/div/div/div[4]/form[2]/div/div[1]/ul/li[1]/div[1]/div[1]/div/label/a"
+    # job = WebDriverWait(driver, 10).until(EC.presence_of_element_located((By.XPATH, jobXpath)))
+    # job.click()
+
+    # driver.implicitly_wait(10)
+    # job_title_Xpath="/html/body/div/div/div/div[1]/div/div/div[2]/form/div[1]/div[1]/div/span"
+    # job_title = driver.find_element(By.XPATH, job_title_Xpath).text
+    # print(job_title)
+
+    # driver.back()
+    # back_button_Xpath = "/html/body/div/div/div/div[1]/div/div/div[1]/div/span/span/a"
+    # back_button = WebDriverWait(driver, 10).until(EC.presence_of_element_located((By.XPATH, back_button_Xpath)))
+    # back_button.click()
+#             job_title_Xpath="/html/body/div/div/div/div[1]/div/div/div[2]/form/div[1]/div[1]/div/span"
+
+    # for job in range(1, num_jobs_on_pg+1):
+    #     driver.implicitly_wait(10)
+    #     jobXpath = f"/html/body/div/div/div/div[1]/div/div/div[4]/form[2]/div/div[1]/ul/li[{job}]/div[1]/div[1]/div/label/a"
+
+
+    for job in range(1, actual_num_jobs_on_page+1):
         driver.implicitly_wait(10)
         jobXpath = f"/html/body/div/div/div/div[1]/div/div/div[4]/form[2]/div/div[1]/ul/li[{job}]/div[1]/div[1]/div/label/a"
         job_info = {}
@@ -205,8 +235,19 @@ for pg in range(0, pg_clicks):
         except Exception as e:
             print(f'An error occurred: {e}')
         
-    driver.implicitly_wait(10)
+    # driver.implicitly_wait(30)
+    time.sleep(1)
+    next_pg_Xpath = "/html/body/div/div/div/div[1]/div/div/div[4]/form[1]/div/div[3]/ul/li[9]/a"
+
+    if (pg_num%5==1 and pg_num >1):
+        next_pg_Xpath = "/html/body/div/div/div/div[1]/div/div/div[4]/form[1]/div/div[3]/ul/li[8]/a"
+        print("changed xpath")
+        # /html/body/div/div/div/div[1]/div/div/div[4]/form[1]/div/div[3]/ul/li[8]/a
+    if (pg_num==(pg_clicks-1)):
+        next_pg_Xpath = "/html/body/div/div/div/div[1]/div/div/div[4]/form[1]/div/div[3]/ul/li[8]/a"
+        print("changed paths")
     next_pg_button = WebDriverWait(driver, 10).until(EC.presence_of_element_located((By.XPATH, next_pg_Xpath)))
+    
     next_pg_button.click()
     driver.implicitly_wait(10)
     print('clicked?')
@@ -218,7 +259,7 @@ for pg in range(0, pg_clicks):
 
 
 # print(job_dic)
-with open('job_data_9.json', 'w') as f:
+with open('job_data_11.json', 'w') as f:
     json.dump(job_dic, f)
     
 
