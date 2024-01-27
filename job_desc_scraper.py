@@ -4,10 +4,7 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import Select
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
-
 import json
-
-
 
 driver = webdriver.Chrome()
 driver.get("https://careers.peopleclick.com/careerscp/client_mit/external/results/searchResult.html")
@@ -20,23 +17,12 @@ drop_down_button.click()
 fifty_Xpath = "/html/body/div/div/div/div[1]/div/div[2]/form/div[2]/div[6]/div/div/div/ul/li[4]/a"
 fifty_button = driver.find_element(By.XPATH, fifty_Xpath)
 fifty_button.click()
-print('slay')
 
 
 button = driver.find_element(By.XPATH, "/html/body/div/div/div/div[1]/div/div[2]/form/div[2]/div[6]/div/button[2]")
 button.click()
 driver.implicitly_wait(10)
 
-# # for listing in range(1, num_jobs_on_pg+1):
-#     # /html/body/div/div/div/div[1]/div/div/div[4]/form[2]/div/div[1]/ul/li[1]
-#     # /html/body/div/div/div/div[1]/div/div/div[4]/form[2]/div/div[1]/ul/li[{listing}]
-# driver.implicitly_wait(10)
-
-
-
-# # # print(jobXpath)
-# # job_element = driver.find_element(By.XPATH, jobXpath)
-# # jobs_on_page.append(job_element)
 job_dic = {}
 
 job_idx = 0
@@ -44,17 +30,7 @@ num_jobs_on_pg = 50
 num_total_jobs_Xpath = "/html/body/div/div/div/div[1]/div/div/div[4]/form[1]/div/div[1]/span[1]"
 num_total_jobs =  int(driver.find_element(By.XPATH, num_total_jobs_Xpath).text)
 pg_clicks = int(num_total_jobs/num_jobs_on_pg)
-print(pg_clicks)
-# # /html/body/div/div/div/div[1]/div/div/div[4]/form[1]/div/div[3]/ul/li[10]/a
-# # /html/body/div/div/div/div[1]/div/div/div[4]/form[1]/div/div[3]/ul/li[9]/a
-
-# # /html/body/div/div/div/div[1]/div/div/div[4]/form[1]/div/div[3]/ul/li[9]/a
-
-# /html/body/div/div/div/div[1]/div/div/div[4]/form[1]/div/div[3]/ul/li[9]/a
-
-
-
-
+print("NUM CLICKS:", pg_clicks)
 
 
 pg_num = 1
@@ -170,25 +146,6 @@ for pg in range(0, pg_clicks+1):
             except Exception as e:
                 date = ""
                 print(f'ERROR: {e}')
-                # try:
-                #     job_req_Xpath = "/html/body/div/div/div/div[1]/div/div/div[2]/form/div[2]/div/div/div/div[2]/p"
-                #     job_req = driver.find_element(By.XPATH, job_req_Xpath).text
-                #     if ("PREFERRED" in job_req):
-                #         req = job_req.split("  PREFERRED:  ")[0]
-                #         req = req.split("REQUIRED:")[1]
-                #         pre_num_date = job_req.split("PREFERRED:", 1)[1]
-                #         pre = pre_num_date.split("Job #")[0]
-                #     else:
-                #         req = req.split("REQUIRED:")[1]
-                #         pre = ""
-                #     date = job_req.split("\n")[-1]
-                #     print(req)
-                #     print("___________")
-                #     print(pre)
-                #     print("___________")
-                #     print(date)
-                # except:
-                
                 
                 
             print("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~")
@@ -235,14 +192,12 @@ for pg in range(0, pg_clicks+1):
         except Exception as e:
             print(f'An error occurred: {e}')
         
-    # driver.implicitly_wait(30)
     time.sleep(1)
     next_pg_Xpath = "/html/body/div/div/div/div[1]/div/div/div[4]/form[1]/div/div[3]/ul/li[9]/a"
 
     if (pg_num%5==1 and pg_num >1):
         next_pg_Xpath = "/html/body/div/div/div/div[1]/div/div/div[4]/form[1]/div/div[3]/ul/li[8]/a"
         print("changed xpath")
-        # /html/body/div/div/div/div[1]/div/div/div[4]/form[1]/div/div[3]/ul/li[8]/a
     if (pg_num==(pg_clicks-1)):
         next_pg_Xpath = "/html/body/div/div/div/div[1]/div/div/div[4]/form[1]/div/div[3]/ul/li[8]/a"
         print("changed paths")
@@ -250,19 +205,12 @@ for pg in range(0, pg_clicks+1):
     
     next_pg_button.click()
     driver.implicitly_wait(10)
-    print('clicked?')
+    print('CLICKED NEXT PG')
     pg_num+=1
 
+
         
-        
-
-
-
-# print(job_dic)
 with open('job_data_11.json', 'w') as f:
     json.dump(job_dic, f)
-    
 
 driver.quit()
-
-
