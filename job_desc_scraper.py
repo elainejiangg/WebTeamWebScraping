@@ -5,6 +5,7 @@ from selenium.webdriver.support.ui import Select
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 import json
+import uuid
 
 driver = webdriver.Chrome()
 driver.get("https://careers.peopleclick.com/careerscp/client_mit/external/results/searchResult.html")
@@ -23,7 +24,7 @@ button = driver.find_element(By.XPATH, "/html/body/div/div/div/div[1]/div/div[2]
 button.click()
 driver.implicitly_wait(10)
 
-job_dic = {}
+job_dic = []
 
 job_idx = 0
 num_jobs_on_pg = 50
@@ -145,7 +146,7 @@ for pg in range(0, pg_clicks+1):
             
 
             
-
+            job_info["job_idx"] = str(uuid.uuid4())
             job_info["job_title"] = job_title
             job_info["job_number"] = job_number
             job_info["functional_Area"] = functional_Area
@@ -158,7 +159,8 @@ for pg in range(0, pg_clicks+1):
             job_info["job_req"] = req
             job_info["job_pre"] = pre
             job_info["date"] = date
-            job_dic[job_idx] = job_info
+            # job_dic[job_idx] = job_info
+            job_dic.append(job_info)
 
             
             job_idx+=1

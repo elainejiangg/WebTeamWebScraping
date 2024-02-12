@@ -566,11 +566,27 @@ for class_ in class_to_major:
                              "metadata": {"majors": class_to_major[class_]}
                              })
     tracker += 1
-                            
+
+major_ids = {}
+for major in major_to_classes:
+    major_ids[major["title"]] = major["id"]
+
+# create list of dictionaries of From and To for drawing lines between majors and classes
+class_lines = []
+for class_ in classes_to_major:
+    majors = class_["metadata"]["majors"]
+    for major in majors:
+        class_lines.append({"From": major_ids[major], "To": class_["title"]})
+
+
+
 with open('major_to_classes.json', 'w') as f:
     json.dump(major_to_classes, f)
 
 with open('classes_to_major.json', 'w') as f:
     json.dump(classes_to_major, f)
+
+with open('class_lines.json', 'w') as f:
+    json.dump(class_lines, f)
 
 print("done")

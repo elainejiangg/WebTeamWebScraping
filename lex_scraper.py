@@ -11,18 +11,30 @@ podcast_content = [] # list of dicts, each dict represents
 # id, title, guest, transcript, podcast number?
 
 # first click on show all
-buttons = driver.find_element(By.XPATH, "/html/body/div/div/div/div/article/div/div[2]")
+try:
+    buttons = driver.find_element(By.CLASS_NAME,"button-group filter-button-group")
+    time.sleep(10)
+except:
+    buttons = driver.find_element(By.XPATH, "/html/body/div/div/div/div/article/div/div[2]")
+    time.sleep(10)
 button = buttons.find_elements(By.TAG_NAME, "button")[1] # second button
+time.sleep(10)
 button.click()
-driver.implicitly_wait(20)
+time.sleep(10)
 
 # get all podcasts
-grid = driver.find_element(By.XPATH, "/html/body/div/div/div/div/article/div/div[3]")
-# grid = driver.find_element(By.CLASS_NAME, "grid grid-main")
+try: 
+    grid = driver.find_element(By.XPATH, "/html/body/div/div/div/div/article/div/div[3]")
+    time.sleep(10)
+except:
+    grid = driver.find_element(By.CLASS_NAME, "grid grid-main")
+    time.sleep(10)
 
 all_podcasts = grid.find_elements(By.CLASS_NAME, "grid-item main-grid-item")
+time.sleep(10)
 print(len(all_podcasts))
 curr_podcast = driver.find_element(By.XPATH, "/html/body/div/div/div/div/article/div/div[3]/div[2]")
+time.sleep(10)
 
 for podcast in all_podcasts:
     # click on podcast
